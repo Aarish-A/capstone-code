@@ -92,27 +92,41 @@ float potRead(int rawPotValue) {
     return pot;
 }
 
+float mapValue(float value, float srcRangeMin, float srcRangeMax, float targetRangeMin, float targetRangeMax) {
+    // Ensure the input is within the source range
+    value = (value < srcRangeMin) ? srcRangeMin : value;
+    value = (value > srcRangeMax) ? srcRangeMax : value;
+
+    // Calculate how 'far' the value is in the source range (0.0 to 1.0)
+    float srcRangeScale = (value - srcRangeMin) / (srcRangeMax - srcRangeMin);
+
+    // Map the 'far' value to the target range
+    float mappedValue = targetRangeMin + (srcRangeScale * (targetRangeMax - targetRangeMin));
+
+    return mappedValue;
+}
+
 int throttleToRPM(float throttle) {
     if (throttle > 0 && throttle <= 0.1)
-        return 1600;
+        return (int)mapValue(throttle, 0.0, 0.1, 1500, 1600);
     else if (throttle > 0.1 && throttle <= 0.2)
-        return 1800;
+        return (int)mapValue(throttle, 0.1, 0.2, 1600, 1800);
     else if (throttle > 0.2 && throttle <= 0.3)
-        return 2000;
+        return (int)mapValue(throttle, 0.2, 0.3, 1800, 2000);
     else if (throttle > 0.3 && throttle <= 0.4)
-        return 2200;
+        return (int)mapValue(throttle, 0.3, 0.4, 2000, 2200);
     else if (throttle > 0.4 && throttle <= 0.5)
-        return 2500;
+        return (int)mapValue(throttle, 0.4, 0.5, 2200, 2500);
     else if (throttle > 0.5 && throttle <= 0.6)
-        return 2600;
+        return (int)mapValue(throttle, 0.5, 0.6, 2500, 2600);
     else if (throttle > 0.6 && throttle <= 0.7)
-        return 2700;
+        return (int)mapValue(throttle, 0.6, 0.7, 2600, 2700);
     else if (throttle > 0.7 && throttle <= 0.8)
-        return 2800;
+        return (int)mapValue(throttle, 0.7, 0.8, 2700, 2800);
     else if (throttle > 0.8 && throttle <= 0.9)
-        return 2900;
+        return (int)mapValue(throttle, 0.8, 0.9, 2800, 2900);
     else if (throttle > 0.9 && throttle <= 1)
-        return 3000;
+        return (int)mapValue(throttle, 0.9, 1.0, 2800, 3000);
 }
 
 // Function to read onboard data from UART
