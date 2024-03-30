@@ -41,29 +41,3 @@ void processBluetoothData(String data) {
         }
     }
 }
-
-void exportBluetoothData() {
-    // SerialBT.print("Battery:");  // 0-1
-    // SerialBT.print(batPercent);
-    // SerialBT.print(",");
-
-    SerialBT.print("RPM:");  // 0-1
-    SerialBT.print(sensors.engineRPM);
-    SerialBT.print(",");
-
-    // SerialBT.print("Launch:");  // 0-1
-    // SerialBT.print(launchActive);
-    // SerialBT.print(",");
-
-    SerialBT.print("Brake:");  // 0-1
-    SerialBT.print(sensors.brake);
-    SerialBT.print(",");
-
-    SerialBT.print("Throttle:");  // 0-1
-    SerialBT.print(sensors.throttle);
-    SerialBT.print(",");
-
-    SerialBT.print("Helix:");  // 0-1
-    SerialBT.print(sensors.helix);
-    SerialBT.println(",");
-}

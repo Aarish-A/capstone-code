@@ -11,6 +11,7 @@ void initPID(PIDController *pid, double kp, double ki, double kd, double setpoin
     pid->kd = kd;
     pid->setpoint = setpoint;
     pid->integral = 0.0;
+    pid->error = 0.0;
     pid->prevError = 0.0;
     pid->outputMin = outputMin;
     pid->outputMax = outputMax;
@@ -18,10 +19,10 @@ void initPID(PIDController *pid, double kp, double ki, double kd, double setpoin
 
 // Update the PID controller
 double updatePID(PIDController *pid, double currentValue, double deltaTime) {
-    double error = pid->setpoint - currentValue;
-    pid->integral += error * deltaTime;
-    double derivative = (error - pid->prevError) / deltaTime;
-    double output = pid->kp * error + pid->ki * pid->integral + pid->kd * derivative;
+    pid->error = pid->setpoint - currentValue;
+    pid->integral += pid->error * deltaTime;
+    double derivative = (pid->error - pid->prevError) / deltaTime;
+    double output = pid->kp * pid->error + pid->ki * pid->integral + pid->kd * derivative;
 
     // Clamp output to min/max
     if (output > pid->outputMax)
@@ -29,7 +30,7 @@ double updatePID(PIDController *pid, double currentValue, double deltaTime) {
     if (output < pid->outputMin)
         output = pid->outputMin;
 
-    pid->prevError = error;
+    pid->prevError = pid->error;
 
     return output;
 }

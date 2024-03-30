@@ -53,8 +53,15 @@ void loop() {
     setMotor(dutyCycle);  // setMotor handles MOSFET switching (direction + duty cycle)
 
     // Export (write) comms data
-    exportOnboardData();
-    exportBluetoothData();
+    exportOnboardData("RPM", sensors.engineRPM,
+                      "Brake", sensors.brake,
+                      "Throttle", sensors.throttle,
+                      "Helix", sensors.helix);
+
+    exportBluetoothData("RPM", sensors.engineRPM,
+                        "Throttle", sensors.throttle,
+                        "Helix", sensors.helix,
+                        "DutyCycle", dutyCycle);
 
     // Update state to new state
     updateState();

@@ -7,6 +7,7 @@ typedef struct {
     double kd;         // Derivative gain
     double setpoint;   // Desired setpoint
     double integral;   // Integral term accumulator
+    double error;      // Current error
     double prevError;  // Previous error, for derivative term
     double outputMin;  // Minimum output value
     double outputMax;  // Maximum output value
