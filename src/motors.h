@@ -8,4 +8,4 @@
 #include "sensors.h"
 
 void initMotor();
-void setMotor(int dutyCycle, SensorValues *sensors);
+void setMotor(int dutyCycle);

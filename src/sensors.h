@@ -13,13 +13,18 @@ typedef struct {
     bool brake;
 } SensorValues;
 
-extern AS5600 Encoder;
-
 void initSensors();
 void updateSensors(SensorValues *sensors);
 
 float readThrottle();
 float readHelix();
+float potRead(int rawPotValue);
+
+// Global Extern Variables
+extern SensorValues sensors;
+extern AS5600 Encoder;
+extern int throttleMin;
+extern int throttleMax;
 
 // Keep track of for sensors:
 //  - Previous sensor value
