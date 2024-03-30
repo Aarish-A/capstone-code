@@ -13,7 +13,7 @@ void initMotor() {
     ledcAttachPin(PIN_MOTOR_REVERSE_B, 1);
 }
 
-void setMotor(float dutyCycle, SensorValues *sensors) {
+void setMotor(int dutyCycle, SensorValues *sensors) {
     bool reverse = dutyCycle > 0 ? true : false;
 
     digitalWrite(PIN_MOTOR_FORWARD_A, LOW);
@@ -26,12 +26,12 @@ void setMotor(float dutyCycle, SensorValues *sensors) {
     if (!reverse) {
         if (sensors->helix < HELIX_MAX_ANGLE) {
             digitalWrite(PIN_MOTOR_FORWARD_A, HIGH);
-            ledcWrite(0, (uint32_t)(dutyCycle * 100));
+            ledcWrite(0, abs(dutyCycle));
         }
     } else if (reverse) {
         if (sensors->helix > HELIX_MAX_ANGLE) {
             digitalWrite(PIN_MOTOR_FORWARD_B, HIGH);
-            ledcWrite(1, (uint32_t)(dutyCycle * 100));
+            ledcWrite(1, abs(dutyCycle));
         }
     }
 }

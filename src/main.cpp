@@ -40,7 +40,7 @@ void setup() {
 
     initSensors();
     initPID(&ratioPID, RATIO_PID_KP, RATIO_PID_KI, RATIO_PID_KD, RATIO_PID_INIT_SETPOINT, RATIO_PID_OUTPUT_MIN, RATIO_PID_OUTPUT_MAX);
-    initPID(&motorPID, MOTOR_PID_KP, MOTOR_PID_KI, MOTOR_PID_KD, MOTOR_PID_INIT_SETPOINT, 0, 1);
+    initPID(&motorPID, MOTOR_PID_KP, MOTOR_PID_KI, MOTOR_PID_KD, MOTOR_PID_INIT_SETPOINT, MOTOR_PID_OUTPUT_MIN, MOTOR_PID_OUTPUT_MAX);
     currentState = Idle;
 }
 
@@ -53,7 +53,7 @@ void loop() {
     }
 
     int setpoint;
-    float dutyCycle;
+    int dutyCycle;
 
     switch (currentState) {
         case Idle:

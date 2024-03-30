@@ -17,6 +17,9 @@
 #define PIN_MOTOR_REVERSE_A 25  // Reverse MOSFET (+)
 #define PIN_MOTOR_REVERSE_B 33  // Reverse MOSFET (-)
 
+// Electrical System Constants
+#define PWM_RESOLUTION 256
+
 // Physical System Constants
 #define BELT_LENGTH 1
 #define HELIX_MIN_ANGLE 0
@@ -34,6 +37,6 @@
 #define MOTOR_PID_KP 1
 #define MOTOR_PID_KI 0.01
 #define MOTOR_PID_KD 0.1
-#define MOTOR_PID_OUTPUT_MIN -1.0
-#define MOTOR_PID_OUTPUT_MAX 1.0
+#define MOTOR_PID_OUTPUT_MIN -(PWM_RESOLUTION - 1)
+#define MOTOR_PID_OUTPUT_MAX +(PWM_RESOLUTION - 1)
 #define MOTOR_PID_INIT_SETPOINT 0
