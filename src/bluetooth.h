@@ -4,11 +4,11 @@
 
 #include "sensors.h"
 
-void initBluetooth();
-void readBluetoothData();
-void processBluetoothData(String data);
-void exportBluetoothData();
+void initBluetooth();                    // Initialize bluetooth system
+void readBluetoothData();                // Read bluetooth data
+void processBluetoothData(String data);  // Process incoming bluetooth data
+void exportBluetoothData();              // Export (write) bluetooth data
 
 // Global Extern Variables
-extern BluetoothSerial SerialBT;  // Bluetooth debug
+extern BluetoothSerial SerialBT;
 extern String incomingBluetoothData;

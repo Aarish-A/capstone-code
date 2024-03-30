@@ -7,5 +7,5 @@
 #include "config.h"
 #include "sensors.h"
 
-void initMotor();
-void setMotor(int dutyCycle);
+void initMotor();              // Initialize motor
+void setMotor(int dutyCycle);  // Set motor given a duty cycle

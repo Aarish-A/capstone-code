@@ -6,6 +6,7 @@
 
 #include "config.h"
 
+// Structure for sensors
 typedef struct {
     float throttle;
     float helix;
@@ -13,12 +14,10 @@ typedef struct {
     bool brake;
 } SensorValues;
 
-void initSensors();
-void updateSensors();
-
-float readThrottle();
-float readHelix();
-float potRead(int rawPotValue);
+void initSensors();              // Initialize all sensors
+void updateSensors();            // Update all sensors
+float readHelix();               // Read helix posiiton
+float potRead(int rawPotValue);  // Read raw poti value
 
 // Global Extern Variables
 extern SensorValues sensors;

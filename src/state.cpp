@@ -1,6 +1,12 @@
 #include "state.h"
 
-ECVTState updateState(ECVTState currentState) {
+ECVTState currentState;
+
+void initStateMachine() {
+    currentState = Idle;
+}
+
+ECVTState updateState() {
     ECVTState nextState = currentState;
 
     // TODO:
@@ -21,5 +27,6 @@ ECVTState updateState(ECVTState currentState) {
             break;
     }
 
-    return nextState;
+    currentState = nextState;
+    return currentState;
 }

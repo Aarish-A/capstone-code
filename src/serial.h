@@ -6,10 +6,10 @@
 #include "config.h"
 #include "sensors.h"
 
-void initSerial();
-void readOnboardData();
-void processOnboardData(String data);
-void exportOnboardData();
+void initSerial();                     // Initialize serial input
+void readOnboardData();                // Read serial data
+void processOnboardData(String data);  // Process serial data
+void exportOnboardData();              // Export (write) back to serial output
 
 // Global Extern Variables
 extern HardwareSerial Onboard;

@@ -8,4 +8,8 @@ typedef enum {
     Drive,
 } ECVTState;
 
-ECVTState updateState(ECVTState currentState);
+void initStateMachine();  // Initialize state machine
+ECVTState updateState();  // Update ECVT State based on current state
+
+// Global Extern Variables
+extern ECVTState currentState;
