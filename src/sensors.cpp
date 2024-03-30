@@ -2,8 +2,8 @@
 
 AS5600 Encoder;
 SensorValues sensors;
-int throttleMin = 4095;
-int throttleMax = 0;
+int throttleMin = 2910;
+int throttleMax = 1820;
 
 void initSensors() {
     pinMode(PIN_BRAKE_SENSOR, INPUT);
@@ -27,24 +27,17 @@ void updateSensors() {
 }
 
 float readHelix() {
-    float rawHelix = (Encoder.readAngle() * AS5600_RAW_TO_DEGREES);
-    return rawHelix;  //- helixOffset;
+    float rawHelix = map(Encoder.readAngle(), 4095, 0, 0, 4095);
+    return ((rawHelix * AS5600_RAW_TO_DEGREES) - HELIX_OFFSET);  //- helixOffset;
 }
 
 float potRead(int rawPotValue) {
-    if (rawPotValue < throttleMin) {
-        throttleMin = rawPotValue;
-    } else if (rawPotValue > throttleMax) {
-        throttleMax = rawPotValue;
-    }
+    float pot = map(rawPotValue, throttleMin, throttleMax, 0, 100);
 
-    float pot = (map(rawPotValue, throttleMin, throttleMax, 0, 1000)) / 1000.0;
-
-    if (pot < 0) {
+    if (pot < 5)
         pot = 0;
-    } else if (pot > 100) {
+    else if (pot > 100)
         pot = 100;
-    }
 
     return pot;
 }

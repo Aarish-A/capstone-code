@@ -22,8 +22,9 @@
 
 // Physical System Constants
 #define BELT_LENGTH 1
-#define HELIX_MIN_ANGLE 0
-#define HELIX_MAX_ANGLE 100
+#define HELIX_MIN_ANGLE 0   // Degrees
+#define HELIX_MAX_ANGLE 47  // Degrees
+#define HELIX_OFFSET 142    // Degrees
 
 // Ratio PID Constants
 #define RATIO_PID_KP 1

@@ -33,7 +33,7 @@ void processOnboardData(String data) {
         if (item == "RPM") {
             sensors.engineRPM = data.substring(dataIndex + 1).toInt();
         } else if (item == "Throttle") {
-            sensors.throttle = potRead(data.substring(dataIndex + 1).toInt());
+            sensors.throttle = potRead(data.substring(dataIndex + 1).toFloat());
         } else if (item == "Launch") {
             // launchActive = data.substring(dataIndex + 1).toInt();
         }
