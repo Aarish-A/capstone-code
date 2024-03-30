@@ -9,7 +9,6 @@
 #include "sensors.h"
 #include "state.h"
 
-SensorValues sensors;
 PIDController ratioPID;
 PIDController motorPID;
 ECVTState currentState;
@@ -46,7 +45,7 @@ void setup() {
 
 void loop() {
     // Read board data
-    updateSensors(&sensors);
+    updateSensors();
     readOnboardData();
     if (SerialBT.connected()) {
         readBluetoothData();  // Read bluetooth data
@@ -72,7 +71,7 @@ void loop() {
             break;
     }
 
-    setMotor(dutyCycle, &sensors);  // Handles MOSFET switching (direction + duty cycle)
+    setMotor(dutyCycle);  // Handles MOSFET switching (direction + duty cycle)
 
     currentState = updateState(currentState, &sensors);
     delay(5);

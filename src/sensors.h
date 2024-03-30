@@ -14,7 +14,7 @@ typedef struct {
 } SensorValues;
 
 void initSensors();
-void updateSensors(SensorValues *sensors);
+void updateSensors();
 
 float readThrottle();
 float readHelix();

@@ -8,4 +8,4 @@ typedef enum {
     Drive,
 } ECVTState;
 
-ECVTState updateState(ECVTState currentState, SensorValues *sensors);
+ECVTState updateState(ECVTState currentState);

@@ -1,6 +1,6 @@
 #include "state.h"
 
-ECVTState updateState(ECVTState currentState, SensorValues *sensors) {
+ECVTState updateState(ECVTState currentState) {
     ECVTState nextState = currentState;
 
     // TODO:
@@ -9,7 +9,7 @@ ECVTState updateState(ECVTState currentState, SensorValues *sensors) {
     switch (currentState) {
         case Idle:
             // TODO: Switching back to idle logic, need vehicle speed for that
-            if (sensors->throttle > 0) {
+            if (sensors.throttle > 0) {
                 nextState = Drive;
             }
             break;

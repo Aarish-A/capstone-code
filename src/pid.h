@@ -15,3 +15,7 @@ typedef struct {
 void initPID(PIDController *pid, double kp, double ki, double kd, double setpoint, double outputMin, double outputMax);
 double updatePID(PIDController *pid, double currentValue, double deltaTime);
 double updatePIDCascading(PIDController *pidOuter, double pidOuterCurrentValue, PIDController *pidInner, double pidInnerCurrentValue);
+
+// Global Extern Variables
+extern PIDController ratioPID;
+extern PIDController motorPID;

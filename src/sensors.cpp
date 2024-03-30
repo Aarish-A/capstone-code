@@ -19,11 +19,11 @@ void initSensors() {
     Encoder.begin();
 }
 
-void updateSensors(SensorValues *sensors) {
+void updateSensors() {
     // Throttle comes from serial reading
     // Engine RPM comes from serial reading
-    sensors->helix = readHelix();
-    sensors->brake = digitalRead(PIN_BRAKE_SENSOR);
+    sensors.helix = readHelix();
+    sensors.brake = digitalRead(PIN_BRAKE_SENSOR);
 }
 
 float readHelix() {

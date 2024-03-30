@@ -1,5 +1,9 @@
 #include "pid.h"
 
+// Global Extern Variables
+PIDController ratioPID;
+PIDController motorPID;
+
 // Initialize the PID controller parameters
 void initPID(PIDController *pid, double kp, double ki, double kd, double setpoint, double outputMin, double outputMax) {
     pid->kp = kp;
