@@ -38,8 +38,8 @@ void setup() {
     // Initialize PID controllers and state
 #ifdef TEST_STATE
     initStateMachine();
-    initPID(&ratioPID, RATIO_PID_KP, RATIO_PID_KI, RATIO_PID_KD, RATIO_PID_INIT_SETPOINT, RATIO_PID_OUTPUT_MIN, RATIO_PID_OUTPUT_MAX);
-    initPID(&motorPID, MOTOR_PID_KP, MOTOR_PID_KI, MOTOR_PID_KD, MOTOR_PID_INIT_SETPOINT, MOTOR_PID_OUTPUT_MIN, MOTOR_PID_OUTPUT_MAX);
+    initPID(&ratioPID, RATIO_PID_KP, RATIO_PID_KI, RATIO_PID_KD, RATIO_PID_INIT_SETPOINT, RATIO_PID_OUTPUT_MIN, RATIO_PID_OUTPUT_MAX, SAMPLE_TIME_MS);
+    initPID(&motorPID, MOTOR_PID_KP, MOTOR_PID_KI, MOTOR_PID_KD, MOTOR_PID_INIT_SETPOINT, MOTOR_PID_OUTPUT_MIN, MOTOR_PID_OUTPUT_MAX, SAMPLE_TIME_MS);
 #endif
 }
 
@@ -103,5 +103,5 @@ void loop() {
     updateState();
 #endif
 
-    delay(5);  // 5ms because that is the rate at which serial data comes in
+    delay(SAMPLE_TIME_MS);  // 5ms because that is the rate at which serial data comes in
 }
