@@ -15,6 +15,9 @@ void processBluetoothData(String data);  // Process incoming bluetooth data
 // Base case for a single argument pair
 template <typename T, typename V>
 void exportBluetoothData(T label, V value) {
+    if (!SerialBT.connected())
+        return;
+
     SerialBT.print(label);
     SerialBT.print(value);
 }
@@ -22,6 +25,9 @@ void exportBluetoothData(T label, V value) {
 // Template function to handle pairs of arguments
 template <typename T, typename V, typename... Args>
 void exportBluetoothData(T label, V value, Args... args) {
+    if (!SerialBT.connected())
+        return;
+
     SerialBT.print(label);
     SerialBT.print(":");
     SerialBT.print(value);
