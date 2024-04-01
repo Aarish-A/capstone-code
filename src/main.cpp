@@ -9,6 +9,18 @@
 #include "state.h"
 #include "utilities.h"
 
+// Tasks that have predictable execution times should run periodically
+// Else, tasks with unpredictable/varying execution time should run on a delay
+#define TASK_PERIOD_SENSORS_MS 2
+#define TASK_PERIOD_SERIAL_MS 5
+#define TASK_DELAY_STATE_MS 5
+#define TASK_DELAY_BLUETOOTH_MS 5
+
+void TaskSensors(void* pvParameters);
+void TaskSerial(void* pvParameters);
+void TaskState(void* pvParameters);
+void TaskBluetooth(void* pvParameters);
+
 void setup() {
     // Initialize communications
     initBluetooth();
@@ -25,46 +37,81 @@ void setup() {
 }
 
 void loop() {
-    // Read comms data
-    readOnboardData();
-    readBluetoothData();
+}
 
-    // Update onboard sensors
-    updateSensors();
+void TaskSensors(void* pvParameters) {
+    TickType_t xLastWakeTime;
+    const TickType_t xFrequency = TASK_PERIOD_SENSORS_MS / portTICK_PERIOD_MS;  // Convert ms to ticks
 
-    int setpoint;   // Setpoint variable for PID (target Engine RPM)
-    int dutyCycle;  // Duty Cycle to pass to motor
+    // Initialise the xLastWakeTime variable with the current time.
+    xLastWakeTime = xTaskGetTickCount();
 
-    switch (currentState) {
-        case Idle:
-            dutyCycle = 0;  // There should be no control of motor in idle
-            break;
-        case Brake:
-            // TODO: Impelement later
-            break;
-        case Drive:
-            // Engine RPM setpoint is determined by throttle position
-            setpoint = mapThrottleToRPM(sensors.throttle);
-            // Duty cycle is determined by output of cascading PID controller (to minimize engine RPM error)
-            dutyCycle = updatePIDCascading(&ratioPID, sensors.engineRPM, &motorPID, sensors.helix);
-            break;
+    // This task should execute every "TASK_PERIOD_SENSORS_MS"
+    while (true) {
+        updateSensors();
+
+        // Wait for the next cycle
+        vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
+}
 
-    setMotor(dutyCycle);  // setMotor handles MOSFET switching (direction + duty cycle)
+void TaskSerial(void* pvParameters) {
+    TickType_t xLastWakeTime;
+    const TickType_t xFrequency = TASK_PERIOD_SERIAL_MS / portTICK_PERIOD_MS;  // Convert ms to ticks
 
-    // Export (write) comms data
-    exportOnboardData("RPM", sensors.engineRPM,
-                      "Brake", sensors.brake,
-                      "Throttle", sensors.throttle,
-                      "Helix", sensors.helix);
+    // Initialise the xLastWakeTime variable with the current time.
+    xLastWakeTime = xTaskGetTickCount();
 
-    exportBluetoothData("RPM", sensors.engineRPM,
-                        "Throttle", sensors.throttle,
-                        "Helix", sensors.helix,
-                        "DutyCycle", dutyCycle);
+    // This task should execute every "TASK_PERIOD_SERIAL_MS"
+    while (true) {
+        readOnboardData();
+        exportOnboardData("RPM", sensors.engineRPM,
+                          "Brake", sensors.brake,
+                          "Throttle", sensors.throttle,
+                          "Helix", sensors.helix);
 
-    // Update state to new state
-    updateState();
+        // Wait for the next cycle
+        vTaskDelayUntil(&xLastWakeTime, xFrequency);
+    }
+}
 
-    delay(5);  // 5ms because that is the rate at which serial data comes in
+void TaskState(void* pvParameters) {
+    while (true) {
+        int setpoint;  // Setpoint variable for PID (target Engine RPM)
+
+        switch (currentState) {
+            case Idle:
+                dutyCycle = 0;  // There should be no control of motor in idle
+                break;
+            case Brake:
+                // TODO: Impelement later
+                break;
+            case Drive:
+                // Engine RPM setpoint is determined by throttle position
+                setpoint = mapThrottleToRPM(sensors.throttle);
+                // Duty cycle is determined by output of cascading PID controller (to minimize engine RPM error)
+                dutyCycle = updatePIDCascading(&ratioPID, sensors.engineRPM, &motorPID, sensors.helix);
+                break;
+        }
+
+        setMotor(dutyCycle);  // setMotor handles MOSFET switching (direction + duty cycle)
+
+        updateState();
+
+        // Wait "TASK_DELAY_STATE_MS" until next cycle
+        vTaskDelay(TASK_DELAY_STATE_MS / portTICK_PERIOD_MS);
+    }
+}
+
+void TaskBluetooth(void* pvParameters) {
+    while (true) {
+        readBluetoothData();
+        exportBluetoothData("RPM", sensors.engineRPM,
+                            "Throttle", sensors.throttle,
+                            "Helix", sensors.helix,
+                            "DutyCycle", dutyCycle);
+
+        // Wait "TASK_DELAY_BLUETOOTH_MS" until next cycle
+        vTaskDelay(TASK_DELAY_BLUETOOTH_MS / portTICK_PERIOD_MS);
+    }
 }

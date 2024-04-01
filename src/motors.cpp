@@ -1,5 +1,8 @@
 #include "motors.h"
 
+// Global variables
+int dutyCycle = 0;  // Duty Cycle to pass to motor
+
 void initMotor() {
     pinMode(PIN_MOTOR_FORWARD_A, OUTPUT);
     pinMode(PIN_MOTOR_FORWARD_B, OUTPUT);
