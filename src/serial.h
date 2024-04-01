@@ -18,14 +18,15 @@ void processOnboardData(String data);  // Process serial data
 template <typename T, typename V>
 void exportOnboardData(T label, V value) {
     Onboard.print(label);
-    Onboard.print(value);
+    Onboard.print(": ");
+    Onboard.println(value);
 }
 
 // Template function to handle pairs of arguments
 template <typename T, typename V, typename... Args>
 void exportOnboardData(T label, V value, Args... args) {
     Onboard.print(label);
-    Onboard.print(":");
+    Onboard.print(": ");
     Onboard.print(value);
     Onboard.print(", ");         // Separate pairs with a comma
     exportOnboardData(args...);  // Recursive call with the remaining arguments

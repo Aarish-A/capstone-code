@@ -95,10 +95,10 @@ void loop() {
 #endif
 
 #ifdef TEST_BLUETOOTH
-    timeFunctionExecution("exportBluetoothData", [&]() { exportBluetoothData("RPM", sensors.engineRPM,
-                                                                             "Throttle", sensors.throttle,
-                                                                             "Helix", sensors.helix,
-                                                                             "DutyCycle", dutyCycle); });
+    timeFunctionExecution("logBluetooth", [&]() { logBluetooth("RPM", sensors.engineRPM,
+                                                               "Throttle", sensors.throttle,
+                                                               "Helix", sensors.helix,
+                                                               "DutyCycle", dutyCycle); });
 #endif
 
 #ifdef TEST_STATE
