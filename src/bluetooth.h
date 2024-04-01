@@ -19,7 +19,7 @@ void exportBluetoothData(T label, V value) {
         return;
 
     SerialBT.print(label);
-    SerialBT.print(value);
+    SerialBT.println(value);
 }
 
 // Template function to handle pairs of arguments

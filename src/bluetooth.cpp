@@ -1,7 +1,7 @@
 #include "bluetooth.h"
 
 // Global Extern Variables
-BluetoothSerial SerialBT;  // Bluetooth debug
+BluetoothSerial SerialBT;
 String incomingBluetoothData = "";
 
 void initBluetooth() {

@@ -2,6 +2,7 @@
 
 #include "bluetooth.h"
 #include "config.h"
+#include "debug.h"
 #include "motors.h"
 #include "pid.h"
 #include "sensors.h"
@@ -10,11 +11,11 @@
 #include "utilities.h"
 
 // Comment out defines to remove that part of code
-// #define TEST_SENSORS
-// #define TEST_MOTOR
-// #define TEST_SERIAL
-// #define TEST_BLUETOOTH
-// #define TEST_STATE
+#define TEST_SENSORS
+#define TEST_MOTOR
+#define TEST_SERIAL
+#define TEST_BLUETOOTH
+#define TEST_STATE
 
 void setup() {
 // Initialize communications
@@ -46,16 +47,16 @@ void setup() {
 void loop() {
 // Read comms data
 #ifdef TEST_BLUETOOTH
-    readBluetoothData();
+    timeFunctionExecution("readBluetoothData", readBluetoothData);
 #endif
 
 #ifdef TEST_SERIAL
-    readOnboardData();
+    timeFunctionExecution("readOnboardData", readOnboardData);
 #endif
 
     // Update onboard sensors
 #ifdef TEST_SENSORS
-    updateSensors();
+    timeFunctionExecution("updateSensors", updateSensors);
 #endif
 
     int dutyCycle = 0;  // Duty Cycle to pass to motor
@@ -80,27 +81,29 @@ void loop() {
 #endif
 
 #ifdef TEST_MOTOR
-    setMotor(dutyCycle);  // setMotor handles MOSFET switching (direction + duty cycle)
+    timeFunctionExecution("setMotor", setMotor, dutyCycle);  // setMotor handles MOSFET switching (direction + duty cycle)
 #endif
 
 #ifdef TEST_SERIAL
     // Export (write) comms data
-    exportOnboardData("RPM", sensors.engineRPM,
-                      "Brake", sensors.brake,
-                      "Throttle", sensors.throttle,
-                      "Helix", sensors.helix);
+
+    timeFunctionExecution("exportOnboardData", [&]() { exportOnboardData("RPM", sensors.engineRPM,
+                                                                         "Brake", sensors.brake,
+                                                                         "Throttle", sensors.throttle,
+                                                                         "Helix", sensors.helix); });  // setMotor handles MOSFET switching (direction + duty cycle)
+
 #endif
 
 #ifdef TEST_BLUETOOTH
-    exportBluetoothData("RPM", sensors.engineRPM,
-                        "Throttle", sensors.throttle,
-                        "Helix", sensors.helix,
-                        "DutyCycle", dutyCycle);
+    timeFunctionExecution("exportBluetoothData", [&]() { exportBluetoothData("RPM", sensors.engineRPM,
+                                                                             "Throttle", sensors.throttle,
+                                                                             "Helix", sensors.helix,
+                                                                             "DutyCycle", dutyCycle); });
 #endif
 
 #ifdef TEST_STATE
     // Update state to new state
-    updateState();
+    timeFunctionExecution("updateState", updateState);
 #endif
 
     delay(SAMPLE_TIME_MS);  // 5ms because that is the rate at which serial data comes in
