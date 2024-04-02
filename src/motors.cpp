@@ -30,16 +30,16 @@ void setMotor(int dutyCycle) {
     // ledcWrite(0, 0);  // Channel 0 = PIN_MOTOR_FORWARD_B
     // ledcWrite(1, 0);  // Channel 1 = PIN_MOTOR_REVERSE_B
 
-    delay(1);  // Wait for MOSFETS to reset, can be much lower, 1ms for now
+    delayMicroseconds(100);  // Wait for MOSFETS to reset, can be much lower, 1ms for now
 
     if (!reverse) {
-        if (sensors.helix < HELIX_MAX_ANGLE) {
+        if (sensors.helix < HELIX_MAX_ANGLE - 5) {
             ledcAttachPin(PIN_MOTOR_FORWARD_B, 0);
             digitalWrite(PIN_MOTOR_FORWARD_A, HIGH);
             ledcWrite(0, abs(dutyCycle));
         }
     } else if (reverse) {
-        if (sensors.helix > HELIX_MAX_ANGLE) {
+        if (sensors.helix > HELIX_MAX_ANGLE + 5) {
             ledcAttachPin(PIN_MOTOR_REVERSE_B, 1);
             digitalWrite(PIN_MOTOR_FORWARD_B, HIGH);
             ledcWrite(1, abs(dutyCycle));
