@@ -39,30 +39,3 @@ void processOnboardData(String data) {
         }
     }
 }
-
-// // Function to export onboard data to UART
-// void exportOnboardData() {
-//     // Onboard.print("Battery:");  // 0-1
-//     // Onboard.print(batPercent);
-//     // Onboard.print(",");
-
-//     Onboard.print("RPM:");  // 0-1
-//     Onboard.print(sensors.engineRPM);
-//     Onboard.print(",");
-
-//     // Onboard.print("Launch:");  // 0-1
-//     // Onboard.print(launchActive);
-//     // Onboard.print(",");
-
-//     Onboard.print("Brake:");  // 0-1
-//     Onboard.print(sensors.brake);
-//     Onboard.print(",");
-
-//     Onboard.print("Throttle:");  // 0-1
-//     Onboard.print(sensors.throttle);
-//     Onboard.print(",");
-
-//     Onboard.print("Helix:");  // 0-1
-//     Onboard.print(sensors.helix);
-//     Onboard.println(",");
-// }

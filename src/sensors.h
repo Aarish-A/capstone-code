@@ -24,9 +24,3 @@ extern SensorValues sensors;
 extern AS5600 Encoder;
 extern int throttleMin;
 extern int throttleMax;
-
-// Keep track of for sensors:
-//  - Previous sensor value
-//  - Current sensor value
-//  - How long it's been seen sensor value switched
-//  - Sensor value sensitivity
