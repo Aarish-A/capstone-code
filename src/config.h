@@ -24,7 +24,7 @@
 #define BELT_LENGTH 1
 #define HELIX_MIN_ANGLE 0   // Degrees
 #define HELIX_MAX_ANGLE 47  // Degrees
-#define HELIX_OFFSET 142    // Degrees
+#define HELIX_OFFSET 166    // Degrees
 
 // Ratio PID Constants
 #define RATIO_PID_KP 1
@@ -41,3 +41,5 @@
 #define MOTOR_PID_OUTPUT_MIN -(PWM_RESOLUTION - 1)
 #define MOTOR_PID_OUTPUT_MAX +(PWM_RESOLUTION - 1)
 #define MOTOR_PID_INIT_SETPOINT 0
+
+#define SAMPLE_TIME_MS 5

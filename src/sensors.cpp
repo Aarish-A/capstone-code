@@ -39,5 +39,5 @@ float potRead(int rawPotValue) {
     else if (pot > 100)
         pot = 100;
 
-    return pot;
+    return pot / 100.0;
 }

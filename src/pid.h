@@ -11,11 +11,12 @@ typedef struct {
     double prevError;  // Previous error, for derivative term
     double outputMin;  // Minimum output value
     double outputMax;  // Maximum output value
+    int sampleTimeMs;
 } PIDController;
 
-void initPID(PIDController *pid, double kp, double ki, double kd, double setpoint, double outputMin, double outputMax);                 // Initialize PID controller
-double updatePID(PIDController *pid, double currentValue, double deltaTime);                                                            // Update PID controller
-double updatePIDCascading(PIDController *pidOuter, double pidOuterCurrentValue, PIDController *pidInner, double pidInnerCurrentValue);  // Update two PID controllers with cascading logic
+void initPID(PIDController *pid, double kp, double ki, double kd, double setpoint, double outputMin, double outputMax, int sampleTimeMs);  // Initialize PID controller
+double updatePID(PIDController *pid, double currentValue);                                                                                 // Update PID controller
+double updatePIDCascading(PIDController *pidOuter, double pidOuterCurrentValue, PIDController *pidInner, double pidInnerCurrentValue);     // Update two PID controllers with cascading logic
 
 // Global Extern Variables
 extern PIDController ratioPID;

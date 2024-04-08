@@ -2,6 +2,7 @@
 
 #include "bluetooth.h"
 #include "config.h"
+#include "debug.h"
 #include "motors.h"
 #include "pid.h"
 #include "sensors.h"
@@ -30,10 +31,12 @@ void TaskBluetooth(void* pvParameters);
 void setup() {
     // Initialize communications
     initBluetooth();
+
     initSerial();
 
     // Initialize inputs and outputs
     initSensors();
+
     initMotor();
 
     // Initialize PID controllers and state
